@@ -1,0 +1,24 @@
+{
+  "name": "code-notes-editor",
+  "type": "module",
+  "author": "Alfonso Chavarro",
+  "description": "A simple code editor on the website.",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^3.0.12",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "monaco-editor": "^0.41.0",
+    "split-grid": "^1.0.11"
+  },
+  "devDependencies": {
+    "@types/file-saver": "^2.0.5"
+  }
+}
