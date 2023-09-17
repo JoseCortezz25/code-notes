@@ -15,16 +15,17 @@ export const getCodeFromTemplate = (): CodeTemplate => {
   const css = cssEditor.getValue()
   const js = jsEditor.getValue()
 
-  return {html, css, js}
+  return { html, css, js }
 };
 
 function handlerText() {
   const html = htmlEditor.getValue()
   const css = cssEditor.getValue()
   const js = jsEditor.getValue()
-  const hashed = getAllHashed({ html, css, js })
+  const hashedCode = getAllHashed({ html, css, js })
+  history.replaceState(null, null, `/${hashedCode}`)
   const isWritted = html !== '' || css !== '' || js !== ''
-  getCode(hashed, isWritted)
+  getCode(hashedCode, isWritted)
 
   const htmlForPreview = createTemplate({ html, css, js })
   $('iframe').setAttribute('srcdoc', htmlForPreview)
@@ -40,9 +41,6 @@ function createTemplate({ html = '', css = '', js = '' }) {
     <html lang="en">
     <head>
       <style>
-        body {
-          font-family: "Roboto", san-serif;
-        }
         ${css}
       </style>
     </head>

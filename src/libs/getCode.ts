@@ -10,11 +10,6 @@ export function getCode(path: string, isWrited: boolean) {
       button.removeAttribute('disabled')
       button.onclick = () => {
         navigator.clipboard.writeText(finalUrl)
-        wrapperText.style.display = 'block'
-
-        setTimeout(() => {
-          wrapperText.style.display = 'none'
-        }, 2000)
       }
       return
     }

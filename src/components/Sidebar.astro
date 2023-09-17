@@ -1,0 +1,76 @@
+---
+import downloadIcon from "../assets/download.svg";
+import shareIcon from "../assets/share.svg";
+import { Image } from "astro:assets";
+---
+
+<div class="menu">
+  <button class="menu-icon" id="btn-download">
+    <Image src={downloadIcon} alt="Icon download" />
+  </button>
+  <button class="menu-icon" id="btn-share">
+    <Image src={shareIcon} alt="Icon share" />
+  </button>
+</div>
+
+<script>
+  import { downloadCode } from "../libs/downloadCode";
+  import { getCodeFromTemplate } from "../libs/template";
+  import { $ } from "../libs/selector";
+  import tippy from 'tippy.js';
+  import 'tippy.js/dist/tippy.css';
+
+  $("#btn-download").addEventListener("click", () => {
+    downloadCode(getCodeFromTemplate());
+  });
+
+  $('#btn-share').addEventListener("click", ()=> {
+    navigator.clipboard.writeText(`${location.href}`);
+  });
+
+  tippy("#btn-download", {
+    content: 'Descargar código',
+    placement: 'right'
+  });
+
+  tippy("#btn-share", {
+    content: 'Compartir código',
+    placement: 'right'
+  });
+</script>
+
+<style>
+  .menu {
+    width: 70px;
+    height: 100%;
+    padding: 15px 20px;
+    background-color: var(--bg-editor-color);
+  }
+
+  .menu-icon {
+    width: 33px;
+    height: 33px;
+    cursor: pointer;
+    transition: all 200ms ease;
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+  }
+
+  .menu-icon:hover {
+    transform: scale(110%);
+  }
+
+  .menu-icon:active {
+    transform: scale(90%);
+  }
+
+  .menu-icon img {
+    width: 100%;
+    height: 100%;
+  }
+
+  button {
+    margin-bottom: 25px;
+  }
+</style>

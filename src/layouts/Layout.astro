@@ -1,4 +1,5 @@
 ---
+import Sidebar from '../components/Sidebar.astro';
 interface Props {
 	title: string;
 }
@@ -17,35 +18,218 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<main class="app">
+			<Sidebar />
+			<div class="editor-content">
+				<slot />
+			</div>
+		</main>
 	</body>
 </html>
+
 <style is:global>
 	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+		--cw-bg-color: rgba(35, 39, 46, 0.95);
+		--cw-bg-having-color: #0c0f1f;
+		--cw-border-color-txtarea: #162566;
+
+		--cw-text-color: #ddd;
+
+		--white: #fff;
+
+		--bg-editor-color: #2D323C;
+
+		--cw-border-color: #171a1f;
+		--cw-border-color-rgba: var(--bg-editor-color);
+		--cw-border-hover-color: #66f;
+		--cw-border-focus-color: #09f;
+		--bg-dark-blue: #161d2e;
 	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
+
+
+	*::before,
+	*::after {
+		box-sizing: inherit;
 	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		margin: 0;
+		padding: 0;
+		color: var(--cw-text-color);
+	}
+
+	.app {
+		width: 100%;
+		height: 100vh;
+		display: flex;
+	}
+
+	.editor-content {
+		width: 100%;
+		height: 100vh;
+		font-family: Avenir, Helvetica, Arial, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		background-color: var(--cw-bg-color);
+		display: grid;
+		grid-template-columns: 0.4fr 10px 1fr;
+	}
+
+	.gutter-col {
+		grid-area: auto;
+		position: relative;
+		cursor: col-resize;
+		background-color: var(--cw-border-color-rgba);
+	}
+
+	.gutter-col::before {
+		position: absolute;
+		content: "";
+		width: 100%;
+		height: 50px;
+		top: 50%;
+		background-image: url("./public/icons/vertical.png");
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+
+	.gutter-row {
+		grid-area: auto;
+		position: relative;
+		cursor: row-resize;
+		background-color: var(--cw-border-color-rgba);
+	}
+
+	.gutter-row::before {
+		position: absolute;
+		content: "";
+		width: 50px;
+		height: 100%;
+		left: 50%;
+		background-image: url("./public/icons/vertical.png");
+		background-position: center;
+		background-repeat: no-repeat;
+		transform: rotate(90deg);
+	}
+
+	.wrapper:nth-child(1) {
+		display: grid;
+		grid-template-rows: 1fr 0.1fr 1fr 0.1fr 1fr;
+		overflow: hidden;
+	}
+
+	.roles {
+		display: flex;
+		flex-direction: column;
+		border-top: 1px solid var(--cw-border-color);
+		overflow: hidden;
+		position: relative;
+	}
+
+	.roles label {
+		font-size: 17px;
+		font-weight: bold;
+		padding: 10px;
+		text-transform: capitalize;
+	}
+
+	/* will remote */
+	.wrapper iframe {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		border: none;
+		display: block;
+		background-color: var(--white);
+	}
+
+	#html,
+	#css,
+	#javascript {
+		width: 100%;
+		height: 100%;
+	}
+
+	.float {
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+		user-select: none;
+	}
+
+	.float img {
+		opacity: 0.5;
+		user-select: none;
+	}
+
+	.roles textarea:focus + .float img,
+	.roles:hover > .float img {
+		opacity: 1;
+	}
+
+	.float span {
+		color: var(--cw-border-color);
+		opacity: 0.6;
+		user-select: none;
+	}
+
+	/* export code */
+
+	.export-code {
+		position: absolute;
+		top: 1%;
+		right: 1%;
+	}
+
+	.button-export {
+		user-select: none;
+		cursor: pointer;
+		padding: 5px 10px;
+		border: 2px solid #2f2f2f;
+		color: rgba(10, 22, 47);
+		border-radius: 5px;
+		font-weight: bold;
+	}
+
+	.button-export:hover {
+		color: var(--white);
+		background-color: var(--cw-border-color);
+		border-color: transparent;
+	}
+
+	.button-export:disabled {
+		cursor: not-allowed;
+		background-color: #f2f2f2;
+		color: gray;
+		border-color: #ccc;
+	}
+
+	#is-copied {
+		display: none;
+		position: absolute;
+		bottom: 1%;
+		left: 50%;
+		border: 1px solid var(--cw-bg-color);
+		background-color: var(--cw-bg-color);
+		border-radius: 5px;
+		padding: 10px 20px;
+	}
+
+	#is-copied span {
+		color: var(--cw-text-color);
+	}
+
+	.icon-tech {
+		max-width: 30px;
+		max-height: 30px;
+	}
+
+	.icon-tech img {
+		width: 100%;
+		height: 100%;
 	}
 </style>
