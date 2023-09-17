@@ -1,6 +1,16 @@
 # CodeNotes 
 A simple code editor on the website.
 
+![Image text](https://raw.githubusercontent.com/JoseCortezz25/code-notes/main/screenshot.png)
+
+## Technologies
+- Astro
+- CSS
+- HTML
+- JavaScript
+- Tippy
+- Monaco Editor
+
 ## 🚀 Project Structure
 
 Inside of your Astro project, you'll see the following folders and files:
